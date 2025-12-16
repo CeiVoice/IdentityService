@@ -1,6 +1,7 @@
 export const config = {
   port: 8000,
-  jwtSecret: process.env.JWT_SECRET || 'test-secret',
+  jwtSecret_session: process.env.JWT_SECRET || 'test-secret',
+  jwtSecret_service: process.env.JWT_SECRET_SERVICE || 'test-secret',
   bcryptRounds: 10,
   supabase: {
     url: process.env.SUPABASE_URL || '',
