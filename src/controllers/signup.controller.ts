@@ -1,6 +1,7 @@
 import Users from "../models/user";
 import Profiles from "../models/profile";
 import bcrypt from "bcrypt";
+import publishUserCreated from "../messaging/publishers/userCreated.publisher"; 
 
 interface SignupPayload {
     Fname: string;
@@ -45,7 +46,9 @@ const SignupByEmail = async (payload: SignupPayload) => {
         ProfileId: profile.id,
         IsBanned: false,
     });
-
+    publishUserCreated(user.id.toString(), user.Email).catch(err =>{
+        console.error("Failed to publish user.create",err)
+    })
     return { user, profile };
 };
 
