@@ -14,6 +14,7 @@ export interface User {
     CreateAt: string;
     UpdateAt: string;
     IsBanned: boolean;
+    EmailConfirmToken: string;
 }
 
 

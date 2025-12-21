@@ -1,13 +1,13 @@
 import getRabbitChannel from "../rabbit"
 import { EXCHANGES, ROUNTING_KEYS } from '../event';
 
-const publishUserCreated = async (userId: string, email: string) => {
+const publishUserCreated = async (userId: string, email: string, emailConfirmToken: string) => {
     try {
         const channel = await getRabbitChannel()
         const event = {
             event: ROUNTING_KEYS.USER_CREATED,
             version: 1,
-            data: { userId, email }
+            data: { userId, email, emailConfirmToken }
         }
         
         channel.publish(
