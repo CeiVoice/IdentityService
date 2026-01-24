@@ -5,7 +5,6 @@ export interface User {
     Email: string;
     Password: string;
     EmailConfirm: boolean;
-    EmailConfirmAt: string | null;
     IsSSO: boolean;
     MetaDataSSO: Record<string, unknown> | null;
     LastSignin?: string | null;
