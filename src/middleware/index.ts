@@ -18,7 +18,7 @@ const validateNginxSecret = (req: Request, res: Response, next: NextFunction) =>
 
 // Middleware to allow health check without authentication
 const healthCheckBypass = (req: Request, res: Response, next: NextFunction) => {
-  if (req.path === '/' || req.path === '/health') {
+  if (req.path === '/' || req.path === '/health' || req.path.startsWith('/api-docs')) {
     return next();
   }
   validateNginxSecret(req, res, next);
