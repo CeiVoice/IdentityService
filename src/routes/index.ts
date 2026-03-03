@@ -234,6 +234,62 @@ router.post("/signin", async (req: Request, res: Response) => {
 
 /**
  * @swagger
+ * /signin/google:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: Sign in with Google
+ *     description: Authenticate via Google ID token. Links to an existing account if the email already exists, otherwise creates a new account.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - idToken
+ *             properties:
+ *               idToken:
+ *                 type: string
+ *                 description: Google ID token obtained from the client-side Google Sign-In flow
+ *                 example: "eyJhbGciOiJSUzI1NiIsImtpZCI6..."
+ *     responses:
+ *       200:
+ *         description: Authenticated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 token:
+ *                   type: string
+ *                   description: JWT authentication token
+ *       400:
+ *         description: Authentication failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.post("/signin/google", async (req: Request, res: Response) => {
+  try {
+    const { idToken } = req.body;
+    if (!idToken) {
+      return res.status(400).json({ success: false, error: 'idToken is required' });
+    }
+    const result = await SigninByEmail.SigninByGoogle(idToken);
+    res.status(200).json({ success: true, token: result });
+  } catch (error) {
+    console.error('Google signin error:', error);
+    res.status(400).json({ success: false, error: error instanceof Error ? error.message : 'Google signin failed' });
+  }
+});
+
+/**
+ * @swagger
  * /confirm-email/{token}:
  *   get:
  *     tags:

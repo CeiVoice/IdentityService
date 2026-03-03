@@ -9,4 +9,8 @@ const SigninByEmail = async (payload: SigninPayload) => {
     return await authService.signinByEmail(payload);
 };
 
-export default { SigninByEmail };
+const SigninByGoogle = async (idToken: string) => {
+    return await authService.signinByGoogle(idToken);
+};
+
+export default { SigninByEmail, SigninByGoogle };
