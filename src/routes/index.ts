@@ -327,7 +327,7 @@ router.get("/confirm-email/:token", async (req: Request, res: Response) => {
     if (!token) {
       return res.status(400).json({ success: false, error: 'Token is required' });
     }
-    const result = await EmailConfirmController.confirmEmail(token);
+    const result = await EmailConfirmController.confirmEmail(token as string);
     res.status(200).json(result);
   } catch (error) {
     console.error('Email confirmation error:', error);
